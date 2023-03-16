@@ -2,7 +2,18 @@
 
 This is a concise collection of notes on using the shell. `zsh` is assumed.
 
-## Simple Commands & Pipelines
+# Theory
+
+A shell takes **commands**
+
+There are two types of shells
+
+- interactive
+- login
+
+# Configuration
+
+# Syntax
 
 A simple command is
 
@@ -11,9 +22,13 @@ A simple command is
 FOO=World zsh -c 'echo Hello $FOO' # Hello World
 ```
 
-## Useful shell commands
+# Substitution
 
-#### `man` - `man`ual
+# Completion
+
+# Useful commands
+
+### `man` - `man`ual
 
 Standard documentation for most commands.
 
@@ -22,9 +37,9 @@ Standard documentation for most commands.
 man ls
 ```
 
-### Editors
+## Editors
 
-#### `cat` - con`cat`enate
+### `cat` - con`cat`enate
 
 The easiest way to view a file.
 
@@ -33,336 +48,336 @@ The easiest way to view a file.
 cat /etc/hosts /etc/hostname
 ```
 
-#### `less`
+### `less`
 
-#### `xxd`
+### `xxd`
 
-#### `vim`, `vi`
+### `vim`, `vi`
 
-#### `nano`
+### `nano`
 
-#### `emacs`
+### `emacs`
 
-### Stream manipulation
+## Stream manipulation
 
-#### `awk`
+### `awk`
 
-##### Resources
+#### Resources
 
 - [`gawk` manual](https://www.gnu.org/software/gawk/manual/gawk.html)
 
-#### `sed`
+### `sed`
 
-#### `expand`
+### `expand`
 
-#### `sort`
+### `sort`
 
-#### `uniq`
+### `uniq`
 
-#### `jq`
+### `jq`
 
-#### `grep`
+### `grep`
 
-#### `cut`
+### `cut`
 
-#### `tr`
+### `tr`
 
-#### `wc`
+### `wc`
 
-#### `head`
+### `head`
 
-#### `tail`
+### `tail`
 
-#### `echo`
+### `echo`
 
-### Cryptography
+## Cryptography
 
-#### `ssh-keygen`
+### `ssh-keygen`
 
-#### `ssh-copy-id`
+### `ssh-copy-id`
 
-#### `ssh-agent`
+### `ssh-agent`
 
-#### `ssh-add`
+### `ssh-add`
 
-#### `ssh`
+### `ssh`
 
-#### `scp`
+### `scp`
 
-#### `rsync`
+### `rsync`
 
-#### `gpg`
+### `gpg`
 
-#### `sftp`
+### `sftp`
 
-#### `openssl`
+### `openssl`
 
-### Networking
+## Networking
 
-#### `curl`
+### `curl`
 
-#### `wget`
+### `wget`
 
-#### `netstat`
+### `netstat`
 
-#### `ifconfig`
+### `ifconfig`
 
-#### `ip`
+### `ip`
 
-#### `route`
+### `route`
 
-#### `ping`
+### `ping`
 
-#### `traceroute`
+### `traceroute`
 
-#### `mtr`
+### `mtr`
 
-#### `dig`
+### `dig`
 
-#### `nslookup`
+### `nslookup`
 
-#### `tcpdump`
+### `tcpdump`
 
-#### `nmap`
+### `nmap`
 
-#### `whois`
+### `whois`
 
-#### `ufw`
+### `ufw`
 
-#### `iptables`
+### `iptables`
 
-### Compression
+## Compression
 
-#### `tar`
+### `tar`
 
-#### `gzip`
+### `gzip`
 
-#### `bzip2`
+### `bzip2`
 
-#### `xz`
+### `xz`
 
-#### `zip`
+### `zip`
 
-#### `unzip`
+### `unzip`
 
-### Filesystem
+## Filesystem
 
-#### `cp`
+### `cp`
 
-#### `ln`
+### `ln`
 
-#### `mv`
+### `mv`
 
-#### `rm`
+### `rm`
 
-#### `mkdir`
+### `mkdir`
 
-#### `rmdir`
+### `rmdir`
 
-#### `find`
+### `find`
 
-#### `ls`
+### `ls`
 
-#### `lsblk`
+### `lsblk`
 
-#### `tree`
+### `tree`
 
-#### `df`
+### `df`
 
-#### `du`
+### `du`
 
-#### `free`
+### `free`
 
-#### `file`
+### `file`
 
-#### `diff`
+### `diff`
 
-#### `cmp`
+### `cmp`
 
-#### `comm`
+### `comm`
 
-#### `patch`
+### `patch`
 
-#### `touch`
+### `touch`
 
-#### `mkfifo`
+### `mkfifo`
 
-### Operating system
+## Operating system
 
-#### `shutdown`
+### `shutdown`
 
-#### `reboot`
+### `reboot`
 
-#### `halt`
+### `halt`
 
-#### `poweroff`
+### `poweroff`
 
-#### `systemctl`
+### `systemctl`
 
-#### `service`
+### `service`
 
-#### `journalctl`
+### `journalctl`
 
-#### `dmesg`
+### `dmesg`
 
-### Terminal interaction
+## Terminal interaction
 
-#### `tmux`
+### `tmux`
 
-#### `cd`
+### `cd`
 
-#### `pwd`
+### `pwd`
 
-#### `alias`
+### `alias`
 
-#### `unalias`
+### `unalias`
 
-#### `history`
+### `history`
 
-#### `clear`
+### `clear`
 
-#### `exit`
+### `exit`
 
-#### `which`
+### `which`
 
-#### `whereis`
+### `whereis`
 
-#### `whatis`
+### `whatis`
 
-#### `pushd`
+### `pushd`
 
-#### `popd`
+### `popd`
 
-#### `dirs`
+### `dirs`
 
-#### `printenv`
+### `printenv`
 
-#### `set`
+### `set`
 
-#### `unset`
+### `unset`
 
-### Process
+## Process
 
-#### `ps`
+### `ps`
 
-#### `pstree`
+### `pstree`
 
-#### `lsof`
+### `lsof`
 
-#### `top`
+### `top`
 
-#### `kill`
+### `kill`
 
-#### `killall`
+### `killall`
 
-#### `sh`
+### `sh`
 
-#### `xargs`
+### `xargs`
 
-#### `coproc`
+### `coproc`
 
-#### `fg`
+### `fg`
 
-#### `bg`
+### `bg`
 
-#### `sleep`
+### `sleep`
 
-#### `watch`
+### `watch`
 
-#### `nohup`
+### `nohup`
 
-#### `nice`
+### `nice`
 
-#### `renice`
+### `renice`
 
-#### `at`
+### `at`
 
-#### `batch`
+### `batch`
 
-#### `cron`
+### `cron`
 
-#### `crontab`
+### `crontab`
 
-#### `atq`
+### `atq`
 
-#### `atrm`
+### `atrm`
 
-### Info
+## Info
 
-#### `id`
+### `id`
 
-#### `whoami`
+### `whoami`
 
-#### `whatis`
+### `whatis`
 
-#### `hostname`
+### `hostname`
 
-#### `date`
+### `date`
 
-#### `cal`
+### `cal`
 
-#### `uptime`
+### `uptime`
 
-#### `time`
+### `time`
 
-#### `uname`
+### `uname`
 
-#### `arch`
+### `arch`
 
-### Permissions
+## Permissions
 
-#### `chmod`
+### `chmod`
 
-#### `chown`
+### `chown`
 
-#### `chgrp`
+### `chgrp`
 
-#### `sudo`
+### `sudo`
 
-#### `su`
+### `su`
 
-#### `passwd`
+### `passwd`
 
-#### `useradd`
+### `useradd`
 
-#### `userdel`
+### `userdel`
 
-#### `usermod`
+### `usermod`
 
-#### `groupadd`
+### `groupadd`
 
-#### `groupdel`
+### `groupdel`
 
-#### `groupmod`
+### `groupmod`
 
-### Disk operations
+## Disk operations
 
-#### `dd`
+### `dd`
 
-#### `mount`
+### `mount`
 
-#### `umount`
+### `umount`
 
-#### `blkid`
+### `blkid`
 
-#### `fdisk`
+### `fdisk`
 
-#### `parted`
+### `parted`
 
-#### `mkfs`
+### `mkfs`
 
-#### `mkswap`
+### `mkswap`
 
-#### `swapon`
+### `swapon`
 
-#### `swapoff`
+### `swapoff`
 
-### Misc
+## Misc
 
-#### `git`
+### `git`
 
-#### `man`
+### `man`
 
-## Resources
+# Resources
 
 - [man zshmisc](https://www.mankier.com/1/zshmisc#Simple_Commands_&_Pipelines) - Pretty good and concise breakdown of how the shell works (`zsh` specific)
