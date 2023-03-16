@@ -13,7 +13,7 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 
 ## Useful shell commands
 
-#### `man`
+#### `man` - `man`ual
 
 Standard documentation for most commands.
 
@@ -24,16 +24,14 @@ man ls
 
 ### Editors
 
-#### `cat`
+#### `cat` - con`cat`enate
 
 The easiest way to view a file.
 
 ```sh
-# cat [FILE]
-cat /etc/hosts
+# cat [FILE]...
+cat /etc/hosts /etc/hostname
 ```
-
-#### `more`
 
 #### `less`
 
@@ -51,9 +49,11 @@ cat /etc/hosts
 
 ##### Resources
 
-https://www.gnu.org/software/gawk/manual/gawk.html
+- [`gawk` manual](https://www.gnu.org/software/gawk/manual/gawk.html)
 
 #### `sed`
+
+#### `expand`
 
 #### `sort`
 
