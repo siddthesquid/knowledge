@@ -1,6 +1,6 @@
-# Cheatsheet
+# Shell
 
-(mostly based off [man zshmisc](https://www.mankier.com/1/zshmisc#Simple_Commands_&_Pipelines))
+This is a concise collection of notes on using the shell. `zsh` is assumed.
 
 ## Simple Commands & Pipelines
 
@@ -13,7 +13,41 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 
 ## Useful shell commands
 
-### SSH
+#### `man`
+
+Standard documentation for most commands.
+
+```sh
+# man [COMMAND]
+man ls
+```
+
+### Editors
+
+#### `cat`
+
+The easiest way to view a file.
+
+```sh
+# cat [FILE]
+cat /etc/hosts
+```
+
+#### `vim`
+
+#### `vi`
+
+#### `nano`
+
+#### `emacs`
+
+#### `more`
+
+#### `less`
+
+#### `xxd`
+
+### Cryptography
 
 #### `ssh-keygen`
 
@@ -169,24 +203,6 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 
 #### `dmesg`
 
-### Editors
-
-#### `vim`
-
-#### `vi`
-
-#### `nano`
-
-#### `emacs`
-
-#### `more`
-
-#### `less`
-
-#### `cat`
-
-#### `xxd`
-
 ### Terminal interaction
 
 #### `tmux`
@@ -204,8 +220,6 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 #### `clear`
 
 #### `exit`
-
-#### `sleep`
 
 #### `which`
 
@@ -248,6 +262,28 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 #### `fg`
 
 #### `bg`
+
+#### `sleep`
+
+#### `watch`
+
+#### `nohup`
+
+#### `nice`
+
+#### `renice`
+
+#### `at`
+
+#### `batch`
+
+#### `cron`
+
+#### `crontab`
+
+#### `atq`
+
+#### `atrm`
 
 ### Info
 
@@ -324,3 +360,7 @@ FOO=World zsh -c 'echo Hello $FOO' # Hello World
 #### `git`
 
 #### `man`
+
+## Resources
+
+- [man zshmisc](https://www.mankier.com/1/zshmisc#Simple_Commands_&_Pipelines) - Pretty good and concise breakdown of how the shell works (`zsh` specific)
