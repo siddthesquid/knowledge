@@ -1,7 +1,3 @@
-# Add a .placeholder file in every empty directory (recursively).
-# Also, remove .placeholder files from non-empty directories.
-# Usage: ./placeholder.sh [directory]
-
 PLACEHOLDER=".placeholder"
 
 if [ $# -eq 0 ]; then
