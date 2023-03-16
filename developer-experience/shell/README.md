@@ -33,19 +33,47 @@ The easiest way to view a file.
 cat /etc/hosts
 ```
 
-#### `vim`
-
-#### `vi`
-
-#### `nano`
-
-#### `emacs`
-
 #### `more`
 
 #### `less`
 
 #### `xxd`
+
+#### `vim`, `vi`
+
+#### `nano`
+
+#### `emacs`
+
+### Stream manipulation
+
+#### `awk`
+
+##### Resources
+
+https://www.gnu.org/software/gawk/manual/gawk.html
+
+#### `sed`
+
+#### `sort`
+
+#### `uniq`
+
+#### `jq`
+
+#### `grep`
+
+#### `cut`
+
+#### `tr`
+
+#### `wc`
+
+#### `head`
+
+#### `tail`
+
+#### `echo`
 
 ### Cryptography
 
@@ -158,32 +186,6 @@ cat /etc/hosts
 #### `touch`
 
 #### `mkfifo`
-
-### Stream manipulation
-
-#### `awk`
-
-#### `sed`
-
-#### `sort`
-
-#### `uniq`
-
-#### `jq`
-
-#### `grep`
-
-#### `cut`
-
-#### `tr`
-
-#### `wc`
-
-#### `head`
-
-#### `tail`
-
-#### `echo`
 
 ### Operating system
 
