@@ -1,18 +1,19 @@
 # Modern C++ Development
 
-This is a practical guide to modern C++ development. In general, C++ has valued backwards compatability as new versions came out, but that has led to the language becoming more difficult to work with. I think [this talk](https://www.youtube.com/watch?v=ELeZAKCN4tY) highlights how much better it could be.
+This is a practical guide to modern C++ development. In general, C++ has valued backwards compatability as new versions came out, but that has led to the language becoming more difficult to work with and master. I think [this talk](https://www.youtube.com/watch?v=ELeZAKCN4tY) highlights how much better it could be.
 
 There are many ways of doing the same things in this world. Ideally, we want to know as little syntax as possible without ANY compromises to performance or functionality, and our workflow should be dead simple. This guide is super-opinionated on how to do things, but it highly values
 
 - long-term, large-scale projects
 - latest/modern features
 - minimal syntax
-- minimal performance compromises
+- code readability over minor performance gains
+- but still minimal performance compromises
 - whole project optimizations
 - modular/monorepo layouts
 - minimal developer configuration
 - first-class developer tooling and support
-- OS priority: Linux > MacOS > Windows
+- developer OS priority: Linux > MacOS > Windows
 
 ## Overview
 
@@ -31,7 +32,7 @@ Before we dig into the details, let's see what we want to be able to accomplish 
 We generally want each repository (i.e. git) to be a monorepo. Each package of a monorepo should either represent
 
 - a single library that can be installed via a package manager with static and/or dynamic linking options made available to consumers
-- one of the other types of target types listed above, which may choose to link to other dependent libraries, either statically or dynamically
+- one of the other types of target types listed above, which may link to other libraries, either statically or dynamically
 - (potentially multiple targets on a custom, case-by-case basis)
 
 Each package should ideally be completely self-contained - this means different packages should be able to use different C++ versions. CMake will manage the "monorepo" features of a project.
@@ -39,32 +40,43 @@ Each package should ideally be completely self-contained - this means different 
 ### Project Layout
 
 ```
-<project-name>/
+project/
   root/
+    bin/
     lib/
     include/
     src/
   imports/
   lib/
     foo/
+      build/
+      coverage/
       include/
       src/
       test/
       CMakeLists.txt
+      VERSION
     bar/
+      build/
+      coverage/
       include/
       src/
       test/
       CMakeLists.txt
+      VERSION
   app/
     baz/
+      build/
       src/
       test/
       CMakeLists.txt
+      VERSION
     biz/
+      build/
       src/
       test/
       CMakeLists.txt
+      VERSION
   CMakeLists.txt
 ```
 
@@ -72,35 +84,71 @@ Each package should ideally be completely self-contained - this means different 
 
 ### Workflow
 
-When we develop, we should only be calling commands from the roots of our directory, or Our workflow should generally consist of
+When we develop, we should only call commands from the root of our project. Our workflow should generally consist of
 
 | command       | description                                    |
 | ------------- | ---------------------------------------------- |
 | `make clean`  | clean any build artifacts                      |
 | `make dev`    | start/restart any servers useful for debugging |
-| `make debug`  | build the project in debug mode                |
 | `make format` | lint and format the project                    |
+| `make debug`  | build the project in debug mode                |
 | `make build`  | build the project entirely                     |
 | `make test`   | run all tests                                  |
-| `make`        | (same as `make build`)                         |
+| `make`        | help menu                                      |
 
 Our CI workflow should look like:
 
-| command           | description                                                                                  |
-| ----------------- | -------------------------------------------------------------------------------------------- |
-| `make ci-version` | version the project according to [conventional commits](https://www.conventionalcommits.org) |
-| `make ci-lint`    | lint the project in CI mode                                                                  |
-| `make ci-build`   | build the project in CI mode                                                                 |
-| `make ci-test`    | run all tests in CI mode                                                                     |
-| `make ci-publish` | publish the projects to wherever they need to go                                             |
-| `make ci-cache`   | cache any build artifacts                                                                    |
+| command              | description                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------- |
+| `make ci-cache-load` | load any cached build artifacts                                                              |
+| `make ci-version`    | version the project according to [conventional commits](https://www.conventionalcommits.org) |
+| `make ci-lint`       | lint the project in CI mode                                                                  |
+| `make ci-build`      | build the project in CI mode                                                                 |
+| `make ci-test`       | run all tests in CI mode                                                                     |
+| `make ci-publish`    | publish the projects to wherever they need to go                                             |
+| `make ci-cache-save` | cache any build artifacts                                                                    |
 
 In my opinion, these commands are simple, yet complete and flexible. Here are some principles to keep in mind:
 
 - it is up to the packages to decide how to implement them in a way that best fits the descriptions above
 - top-level CMake options should be kept to a mimimum and should all be focused on development and debugging
+- project specific options should be configured via environment variables set in a `.env` file (checked in) and overridable via a `.env.local` file (local) by users or CI. Project specific options should not be cached
 
 ## Target Types
+
+There are two main target types - libraries and "applications". Applications are anything that isn't a library. This section quickly goes over
+
+- the different target types
+- what the build process looks like
+- how these targets are to be consumed
+
+### Static Libraries
+
+### Dynamic Libraries
+
+### Executables
+
+Each operating system has it's own definition of what it considers an executable.
+
+| OS      | Executable Type |
+| ------- | --------------- |
+| Linux   | ELF             |
+| MacOS   | Mach-O          |
+| Windows | PE              |
+
+These applications can interact with TTY, the filesystem, the network, etc.
+
+### WASM
+
+### OpenGL
+
+### Vulkan
+
+### CUDA
+
+### Kernel Modules
+
+### Custom/Embedded Systems
 
 ## History of C and C++ Features
 
@@ -122,14 +170,39 @@ CMake, IMO, is not a well-designed language. However, it is the de facto standar
 
 ### Numbers
 
-### STL Containers and Algorithms
+### Pointers and References
+
+### l-values, r-values, and Move Semantics
+
+### Classes
 
 ### Templates, Constraints, and Concepts
+
+### STL Containers and Algorithms
+
+#### Iterators
+
+#### Containers
+
+#### Algorithms
+
+### IO
+
+#### Logging
+
+#### Filesystem
+
+#### Clock
+
+#### Networking
+
+### Process Management
 
 ### Concurency and Parallelism
 
 ## Resources
 
+- [How to Write Shared Libraries](https://www.cs.dartmouth.edu/~sergey/cs258/ABI/UlrichDrepper-How-To-Write-Shared-Libraries.pdf) - in-depth guide to how Linux deals with executables and shared libraries
 - [CMake Reference](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html)
 - [Professional CMake](https://crascit.com/professional-cmake/) - good book to learn practical C++ development
 - [The Ultimate CMake/C++ Quick Start](https://www.youtube.com/watch?v=YbgH7yat-Jo)
