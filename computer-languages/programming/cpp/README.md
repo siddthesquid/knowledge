@@ -158,7 +158,7 @@ Even though we don't care to actually know how to use all the features of C++, i
 
 ## CMake
 
-CMake, IMO, is not a well-designed language. However, it is the de facto standard for C++ projects, so learning it is necessary. CMake itself is not a build system - instead, it generates build system files for other build systems, like `make`. But, let's be honest - we are going to use it like a build system.
+CMake is not super well-designed, but it is the de facto standard for C++ projects, so learning it is necessary. CMake itself is not a build system - instead, it generates build system files for other build systems, like `make`. But, let's be honest - we are going to use it like a build system.
 
 ## Modern C++
 
@@ -173,6 +173,8 @@ CMake, IMO, is not a well-designed language. However, it is the de facto standar
 ### Pointers and References
 
 ### l-values, r-values, and Move Semantics
+
+### Functions and Lambdas
 
 ### Classes
 
@@ -195,6 +197,8 @@ CMake, IMO, is not a well-designed language. However, it is the de facto standar
 #### Clock
 
 #### Networking
+
+#### Random
 
 ### Process Management
 
