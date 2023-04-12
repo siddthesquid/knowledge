@@ -86,21 +86,23 @@ project/
 
 When we develop, we should only call commands from the root of our project. Our workflow should generally consist of
 
-| command       | description                                    |
-| ------------- | ---------------------------------------------- |
-| `make clean`  | clean any build artifacts                      |
-| `make dev`    | start/restart any servers useful for debugging |
-| `make format` | lint and format the project                    |
-| `make debug`  | build the project in debug mode                |
-| `make build`  | build the project entirely                     |
-| `make test`   | run all tests                                  |
-| `make`        | help menu                                      |
+| command        | description                                         |
+| -------------- | --------------------------------------------------- |
+| `make clean`   | clean any build artifacts                           |
+| `make install` | install any depdenencies or warn of missing ones    |
+| `make dev`     | start/restart any servers useful while writing code |
+| `make format`  | lint and format the project                         |
+| `make debug`   | build the project in debug mode                     |
+| `make build`   | build the project entirely                          |
+| `make test`    | run all tests                                       |
+| `make`         | help menu                                           |
 
 Our CI workflow should look like:
 
 | command              | description                                                                                  |
 | -------------------- | -------------------------------------------------------------------------------------------- |
 | `make ci-cache-load` | load any cached build artifacts                                                              |
+| `make ci-install`    | install any depdenencies or warn of missing ones                                             |
 | `make ci-version`    | version the project according to [conventional commits](https://www.conventionalcommits.org) |
 | `make ci-lint`       | lint the project in CI mode                                                                  |
 | `make ci-build`      | build the project in CI mode                                                                 |
@@ -112,6 +114,7 @@ In my opinion, these commands are simple, yet complete and flexible. Here are so
 
 - it is up to the packages to decide how to implement them in a way that best fits the descriptions above
 - top-level CMake options should be kept to a mimimum and should all be focused on development and debugging
+- only the `make debug` command should honor any user configured CMake options
 - project specific options should be configured via environment variables set in a `.env` file (checked in) and overridable via a `.env.local` file (local) by users or CI. Project specific options should not be cached
 
 ## Target Types
@@ -156,19 +159,30 @@ Even though we don't care to actually know how to use all the features of C++, i
 
 ## Compiler, Linker, Loader, and ELF Files
 
+## `g++`
+
+Before we learn CMake, let's understand how to use the vanilla `g++` compiler and the different flags that it supports. In this section, we want to be comfortable with
+
+- creating a simple executable
+- creating a static library (and linking it)
+- creating a shared library (and linking it)
+- downloading and linking boost
+
 ## CMake
 
 CMake is not super well-designed, but it is the de facto standard for C++ projects, so learning it is necessary. CMake itself is not a build system - instead, it generates build system files for other build systems, like `make`. But, let's be honest - we are going to use it like a build system.
+
+## Linting and Formatting
 
 ## Modern C++
 
 ### Hello, World!
 
-### Bit Operations
+### Numbers
 
 ### String Manipulation
 
-### Numbers
+### Bit Operations
 
 ### Pointers and References
 
@@ -200,9 +214,15 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 
 #### Random
 
-### Process Management
+#### Process Management
 
 ### Concurency and Parallelism
+
+## Testing
+
+## Debugging
+
+## Documentation
 
 ## Resources
 
@@ -210,5 +230,6 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 - [CMake Reference](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html)
 - [Professional CMake](https://crascit.com/professional-cmake/) - good book to learn practical C++ development
 - [The Ultimate CMake/C++ Quick Start](https://www.youtube.com/watch?v=YbgH7yat-Jo)
+- [g++ man page](https://man7.org/linux/man-pages/man1/g++.1.html)
 - [STL Algorithms](https://www.youtube.com/watch?v=2olsGf6JIkU) - the mental model the speaker uses for STL algorithms is very helpful - the best resource I've seen for understanding STL algorithms
 - [cpp2](https://www.youtube.com/watch?v=ELeZAKCN4tY) - this video highlights some of the biggest problems with C++ by introducing a new language, `cpp2`, which is a superset of C++ and shows how much cleaner C++ can be without sacrificing performance
