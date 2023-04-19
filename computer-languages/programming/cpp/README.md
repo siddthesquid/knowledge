@@ -2,7 +2,7 @@
 
 This is a guide to modern C++ development. C++ is one of the few avenues of squeezing the last 1-2% of performance out of a computer program. The types of performant applications we want to be able to build are (at the least):
 
-- binaries that can be packaged for, distributed to, and executed on, especially including GUI applications (i.e. OpenGL or Vulkan)
+- binaries that can be packaged for, distributed to, and executed on Linux, OS X, and (maybe) Windows, especially including GUI applications (i.e. OpenGL or Vulkan)
 - Linux kernel modules
 - embedded systems
 - WebAssembly modules compiled with EmScripten, with accompanying TypeScript bindings
@@ -10,16 +10,19 @@ This is a guide to modern C++ development. C++ is one of the few avenues of sque
 
 We also want to support separately compiled libraries for any of the above types of applications, with the choice of linking
 
-- statically at compile time with or without link-time optimizations
-- or dynamically, at runtime
+- statically at compile time
+- or dynamically at runtime
 
-So, the ultimate question becomes: **How do we best equip ourselves to build C++ applications and libraries in an organized, scalable, performant, bug-free, auditable, and maintainable way?** It might seem like a lot to ask, but it is doable, as long as we start from solid foundations and approach the problem systematically.
+So, the ultimate question becomes: **How do we best equip ourselves to build C++ applications and libraries in an organized, scalable, performant, bug-free, auditable, and maintainable way?** It might seem like a lot to ask, but it is doable, as long as we start from solid foundations and approach the solution systematically.
 
-This guide is in the middle of a cheatsheet and a zero-to-hero boot camp. Check out the topics we'll cover:
+This guide is in the middle of a cheatsheet and a crash course. The topics we'll cover are
 
 - [Modern C++ Development](#modern-c-development)
   - [Goal 1: Standardize C++ Best Practices](#goal-1-standardize-c-best-practices)
-  - [Goal 2: Developer Workflow](#goal-2-developer-workflow)
+  - [Goal 2: Establish **Simple** Developer Workflow](#goal-2-establish-simple-developer-workflow)
+  - [Goal 3: Ensure Solid Customer Service](#goal-3-ensure-solid-customer-service)
+  - [Goal 4: Prove the Performance and Security](#goal-4-prove-the-performance-and-security)
+  - [Goal 5: Convince Ourselves this System Works](#goal-5-convince-ourselves-this-system-works)
 - [Overview](#overview)
   - [Project Layout](#project-layout)
   - [External Dependency Management](#external-dependency-management)
@@ -92,23 +95,27 @@ This guide is in the middle of a cheatsheet and a zero-to-hero boot camp. Check 
 - [CI/CD](#cicd)
 - [Resources](#resources)
 
+We're not yet done with the introduction. Let's make sure we understand the goals of this document so it's clear what information we should be looking for.
+
 ## Goal 1: Standardize C++ Best Practices
 
-C was created in 1972, and C++ in 1979. Their success is evident from their continued widespread usage seen today, many decades after their invention. C++ has evolved much since then, and backwards compatability has always been a big value. The developer's life becomes much easier when they can upgrade the compiler without fear of breaking older codebases.
+C was created in 1972, and C++ in 1979. Their success is evident from the continued widespread usage seen today, many decades after their invention. C++ has evolved much since then, and backwards compatability has always been a big value. The developer's life becomes much easier when they can upgrade the compiler without fear of breaking older codebases.
 
 The drawback, however, is that the language today is much more complex than it would be if it didn't need to support backwards compatability. [This talk about a theoretical `cpp2`](https://www.youtube.com/watch?v=ELeZAKCN4tY) helps illustrate what a simpler language could look like.
 
-With many new language features and open-sourced libraries since inception, there are many ways of doing the same thing in the C++ world. This is often seen as a positive, but this idea does not scale well with larger codebases. And if there's many ways of doing the same thing, probably one of those ways is the best, right?
+With many new language features and open-sourced libraries since inception, there are many ways of doing the same thing in the C++ world. This is often seen as a positive, but this idea does not scale well with larger codebases. And if there's many ways of doing the same thing, probably one of those ways is the best for a given use case, right?
 
-What this guide (subjectively) considers "best" is a reasonable balance of performance and simplicity (i.e. code readability / developer sanity). Ideally, we want to employ as few design patterns as possible without compromising performance or functionality, something that can be achieved using abstract and composable strategies.
+What this guide (subjectively) considers "best" is a reasonable balance of performance and simplicity (i.e. code readability / developer sanity). Ideally, we want to employ as few design patterns as possible without compromising performance or functionality, something we can get easily using abstract and composable strategies.
 
-This leads us to our first goal: **Enumerate a minimal list of best practices for generally developing performant code in C++**. This includes things like
+This leads us to our first goal: **Enumerate a minimal list of best practices for generally developing large-scale, performant code in C++**. This includes things like
 
-- design patterns
-- stylistic conventions
-- library usage
+- sensible idioms
+- modular design patterns
+- consistent stylistic conventions
+- performance considerations
+- usage of popular libraries
 
-## Goal 2: Developer Workflow
+## Goal 2: Establish **Simple** Developer Workflow
 
 In addition to that, developer workflow should be dead simple, transparent, and easily replicable across different environments. Anyone (even new developers) running a reasonable development setup on any operating system should literally be able to
 
@@ -117,6 +124,14 @@ In addition to that, developer workflow should be dead simple, transparent, and 
 3. and run `make build` or `make test` to build and test the project
 
 without any friction. Once a repository set up like that, developers can feel more confident about making changes and spend more time on business logic rather than build logistics.
+
+## Goal 3: Ensure Solid Customer Service
+
+## Goal 4: Prove the Performance and Security
+
+Because we are using C++ for performance, we should be able to p
+
+## Goal 5: Convince Ourselves this System Works
 
 This guide is super-opinionated on how to develop C++, but it highly values
 
@@ -131,8 +146,6 @@ This guide is super-opinionated on how to develop C++, but it highly values
 - minimal developer configuration
 - first-class developer tooling and support
 - developer OS priority: Linux > MacOS > Windows
-
-This is what we'll be covering in this document:
 
 # Overview
 
@@ -348,7 +361,16 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 
 ## Functions and Lambdas
 
-## Classes
+## `class`es (and `struct`s)
+
+`struct`s and `class`es are pretty much the same thing. The only difference is that `struct`s have public members by default, while `class`es have private. Let's stick to using just `class`es.
+
+But, anyways, a `class` can consist of
+
+- data members - things that take up actual storage, which can be primitives or user-defined types
+- functions - mutate and query data members and other functions
+
+As a best practice, we want functions to be independent as much as possible, meaning one function of a class should not be composable from other functions.
 
 ## Namespaces
 

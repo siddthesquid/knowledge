@@ -10,13 +10,13 @@ Below is a list of computer languages that (I think) are worth knowing.
 
 ### TypeScript
 
+### Python
+
 ## Learn because popular
 
 ### Rust
 
 ### Golang
-
-### Python
 
 ## Hobby
 
@@ -78,19 +78,19 @@ Below is a list of computer languages that (I think) are worth knowing.
 
 ### Cadence
 
+### EVM
+
 ## Low-level
 
 ### x86 Assembly
 
 ### ARM Assembly
 
-### WASM
-
 ### NVidia PTX
 
-### JVM
+### WASM
 
-### EVM
+### JVM
 
 ## Special-purpose
 
