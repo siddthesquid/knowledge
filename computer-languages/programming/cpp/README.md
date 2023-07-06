@@ -1,12 +1,12 @@
 # Modern C++ Development
 
-This is a guide to modern C++ development. C++ is one of the few avenues of squeezing the last 1-2% of performance out of a computer program. The types of performant applications we want to be able to build are (at the least):
+This is a guide to modern C++ development. C++ is one of the few avenues of squeezing the last 1-2% of performance out of a computer program. The types of applications we want to be able to build are (at the least):
 
-- binaries that can be packaged for, distributed to, and executed on Linux, OS X, and (maybe) Windows, especially including GUI applications (i.e. OpenGL or Vulkan)
+- executables that can be packaged for, distributed to, and run on Linux, OS X, and (maybe) Windows, especially including GUI applications (i.e. OpenGL or Vulkan)
 - Linux kernel modules
 - embedded systems
 - WebAssembly modules compiled with EmScripten, with accompanying TypeScript bindings
-- CUDA programs for GPU-accelerated computing, to be distributed either as a binary or a library to be linked with a separate compiler
+- CUDA programs for GPU-accelerated computing, to be distributed either as a standalone executable or a library to be linked with a separate compiler
 
 We also want to support separately compiled libraries for any of the above types of applications, with the choice of linking
 
@@ -54,7 +54,11 @@ This guide is in the middle of a cheatsheet and a crash course. The topics we'll
   - [Pointers, References, and more Pointers](#pointers-references-and-more-pointers)
   - [l-values, r-values, and Move Semantics](#l-values-r-values-and-move-semantics)
   - [Functions and Lambdas](#functions-and-lambdas)
-  - [Classes](#classes)
+  - [`class`es (and `struct`s)](#classes-and-structs)
+    - [Constructors](#constructors)
+    - [Scope](#scope)
+    - [Operator Overloading](#operator-overloading)
+    - [Polymorphism and Virtual Functions](#polymorphism-and-virtual-functions)
   - [Namespaces](#namespaces)
   - [`const` and `constexpr`](#const-and-constexpr)
   - [C++ Attributes](#c-attributes)
@@ -99,7 +103,7 @@ We're not yet done with the introduction. Let's make sure we understand the goal
 
 ## Goal 1: Standardize C++ Best Practices
 
-C was created in 1972, and C++ in 1979. Their success is evident from the continued widespread usage seen today, many decades after their invention. C++ has evolved much since then, and backwards compatability has always been a big value. The developer's life becomes much easier when they can upgrade the compiler without fear of breaking older codebases.
+C was created in 1972, and C++ in 1979. Their success is evident from the continued widespread usage seen today, many decades after their invention. C++ has evolved much since then, and backwards compatability has always been a big value. The developer's life becomes much easier when they can upgrade the compiler to work with new features without fear of breaking older codebases.
 
 The drawback, however, is that the language today is much more complex than it would be if it didn't need to support backwards compatability. [This talk about a theoretical `cpp2`](https://www.youtube.com/watch?v=ELeZAKCN4tY) helps illustrate what a simpler language could look like.
 
@@ -113,7 +117,7 @@ This leads us to our first goal: **Enumerate a minimal list of best practices fo
 - modular design patterns
 - consistent stylistic conventions
 - performance considerations
-- usage of popular libraries
+- usage guidelines of popular libraries
 
 ## Goal 2: Establish **Simple** Developer Workflow
 
@@ -123,26 +127,41 @@ In addition to that, developer workflow should be dead simple, transparent, and 
 2. install dependencies (ideally through `make install`),
 3. and run `make build` or `make test` to build and test the project
 
-without any friction. Once a repository set up like that, developers can feel more confident about making changes and spend more time on business logic rather than build logistics.
+without any friction. Once a repository is set up like that, developers can feel more confident about making changes and spend more time on business logic rather than build logistics.
+
+Once a developer is done with a task, f
+
+Unfortunately, our build files may look ugly trying to get here. However, this type of setup only needs to be done once per package at the beginning without too many future changes over the packages' lives. In fact, once the boilerplate for one package is done, it can be reused for other like projects. There are not even too many variations to boilerplates we can have, so this goal is the easiest to acheive.
 
 ## Goal 3: Ensure Solid Customer Service
 
+Products are always built to be used by someone, who we call the "customer" or the "client". Customers may find problems in the product (or hopefully they only have suggestions for improvements) and we need to make sure our system does not make it hard to
+
 ## Goal 4: Prove the Performance and Security
 
-Because we are using C++ for performance, we should be able to p
+We could probably build more applications quicker with other languages. However, C++ is advertised as being one of the best languages if you want fine-grained control over your performance. We can justify our decision to spend more money on more human-hours
 
 ## Goal 5: Convince Ourselves this System Works
+
+Turns out computers aren't so complicated. If we can get a basic understanding of computer, operating system, program, and compiler primitives and how C++ code eventually maps to those primitives, we will be better equipped to answer questions like
+
+- Why does this code run faster than that code?
+- What type of data races can I expect?
+
+On that note, our final goal is to demistify the path from a C++ program to it being actually executed on hardware.
 
 This guide is super-opinionated on how to develop C++, but it highly values
 
 - long-term, large-scale, multi-person projects
 - mastery of latest/modern features
 - few, simple, and composable design patterns
+- safe code / miminal "undefined behavior" sections
 - code readability over minor performance gains
 - but still minimal performance compromises
+- explicitness over ambiguity
 - whole project / link-time optimizations
 - modular/monorepo codebases with standardized workflows across projects
-- minimal external dependencies
+- minimal third-party dependencies
 - minimal developer configuration
 - first-class developer tooling and support
 - developer OS priority: Linux > MacOS > Windows
@@ -169,10 +188,7 @@ We made a special exception above with ~
 We generally want each repository (i.e. git) to be a monorepo. Each package of a monorepo should either represent
 
 - a single library that can be installed via a package manager with static and/or dynamic linking options made available to consumers
-- one of the other types of target types listed above, which may link to other libraries, either statically or dynamically
-- (potentially multiple targets on a custom, case-by-case basis)
-
-Each package should ideally be completely self-contained - this means different packages should be able to use different C++ versions. CMake will manage the "monorepo" features of a project.
+- one of the other types of target types listed above, which may link to other lion of linting and formatting can be automated. ckages should be able to use different C++ versions. CMake will manage the "monorepo" features of a project.
 
 ## Project Layout
 
@@ -345,6 +361,14 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 
 # Modern C++
 
+C++ is a systems programming language. What this means is that we need to think about our code as
+
+- objects: regions of memory that hold data
+- functions: sequences of instructions that create or operate on objects or call system procedures
+- control flow: logic for deciding which functions to call and when
+
+This is also how the compiler will think. Our goal should be to have clean, readable C++ code that clearly reflects the above concepts. A number of language features have been added over the decades, and we want to choose as few as possible that will get the job done without sacrificing any control over performance.
+
 ## Hello, World!
 
 ## Numbers
@@ -352,6 +376,12 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 ## Bit Operations
 
 ## String Manipulation
+
+In C++, we can choose between C-style strings or `std::string`. We will always prefer `std::string` because
+
+- TODO: List reasons
+
+Let's take a quick look at C-style strings first, just for completeness.
 
 ## `struct`s and arrays
 
@@ -363,14 +393,22 @@ CMake is not super well-designed, but it is the de facto standard for C++ projec
 
 ## `class`es (and `struct`s)
 
-`struct`s and `class`es are pretty much the same thing. The only difference is that `struct`s have public members by default, while `class`es have private. Let's stick to using just `class`es.
+`struct`s and `class`es are pretty much the same thing. The only difference is that `struct`s have public members by default, while `class`es have private. On that note, we will only talk about `class`es.
 
-But, anyways, a `class` can consist of
+We can think of a class as two fundamental things
 
 - data members - things that take up actual storage, which can be primitives or user-defined types
 - functions - mutate and query data members and other functions
 
 As a best practice, we want functions to be independent as much as possible, meaning one function of a class should not be composable from other functions.
+
+### Constructors
+
+### Scope
+
+### Operator Overloading
+
+### Polymorphism and Virtual Functions
 
 ## Namespaces
 
